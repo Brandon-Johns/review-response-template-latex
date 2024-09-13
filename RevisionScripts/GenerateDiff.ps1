@@ -3,8 +3,9 @@ Written By:			Brandon Johns
 Version Created:	2024-09-13
 Last Edited:		2024-09-13
 
-# Same as version used in the following, but with changed the config and comments
+# Almost same as
 # https://github.com/Brandon-Johns/monash-thesis-template-latex-reworked
+#   Changed the config and comments
 
 
 ********************************************************************************
@@ -76,9 +77,9 @@ $fileDiff = 'main_diff'
 
 # Optional arguments passed to latexdiff
 $DiffOptions = @()
-$DiffOptions += '--flatten'
+#$DiffOptions += '--flatten'
 $DiffOptions += '--preamble=RevisionScripts\DiffPreamble.tex'
-#$DiffOptions += '--graphics-markup=none'
+$DiffOptions += '--graphics-markup=none' # Level 1 was causing errors for some reason
 
 # Add to list of commands that latexdiff is allowed to markup
 #	Errors if you add commands that are used in xmpdata (related to package pdfx).

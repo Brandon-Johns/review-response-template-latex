@@ -6,7 +6,6 @@ Last Edited:		2024-09-13
 # Almost same as
 # https://github.com/Brandon-Johns/monash-thesis-template-latex-reworked
 #   Changed the config and comments
-#   Changed to also copy the .bbl file (I think latexdiff was recently updated with breaking changes)
 
 
 ********************************************************************************
@@ -110,7 +109,7 @@ $bibItems | Out-File -LiteralPath "${fileFlat}.bibkeys" -Encoding utf8
 #********************************************************************************
 # AUTOMATED - copy bbl
 #****************************************
-Copy-Item -LiteralPath "${fileMain}.bbl" -Destination "${fileFlat}.bbl"
+#Copy-Item -LiteralPath "${fileMain}.bbl" -Destination "${fileFlat}.bbl"
 
 
 Pop-Location
