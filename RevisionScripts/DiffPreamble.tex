@@ -1,0 +1,26 @@
+% Brandon Changed
+%   Deleted=red with strike-out
+%   Added=blue
+\RequirePackage[normalem]{ulem} %DIF PREAMBLE
+\RequirePackage{color}
+\definecolor{difRed}{RGB}{192,0,0}
+\definecolor{difBlue}{RGB}{0,0,192}
+\providecommand{\DIFadd}[1]{{\protect\color{difBlue}#1}} %DIF PREAMBLE
+\providecommand{\DIFdel}[1]{{\protect\color{difRed}\sout{#1}}} %DIF PREAMBLE
+%DIF SAFE PREAMBLE %DIF PREAMBLE
+\providecommand{\DIFaddbegin}{} %DIF PREAMBLE
+\providecommand{\DIFaddend}{} %DIF PREAMBLE
+\providecommand{\DIFdelbegin}{} %DIF PREAMBLE
+\providecommand{\DIFdelend}{} %DIF PREAMBLE
+\providecommand{\DIFmodbegin}{} %DIF PREAMBLE
+\providecommand{\DIFmodend}{} %DIF PREAMBLE
+%DIF FLOATSAFE PREAMBLE %DIF PREAMBLE
+\providecommand{\DIFaddFL}[1]{\DIFadd{#1}} %DIF PREAMBLE
+\providecommand{\DIFdelFL}[1]{\DIFdel{#1}} %DIF PREAMBLE
+\providecommand{\DIFaddbeginFL}{} %DIF PREAMBLE
+\providecommand{\DIFaddendFL}{} %DIF PREAMBLE
+\providecommand{\DIFdelbeginFL}{} %DIF PREAMBLE
+\providecommand{\DIFdelendFL}{} %DIF PREAMBLE
+%BJ:EXTRA
+\hypersetup{hidelinks} %BJ: Without this one can not determine what ref is added or unchanged as both would be blue
+%BJ:END
