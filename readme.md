@@ -7,50 +7,66 @@ Example output
 
 
 ## About
-The reviewer response letter is not a standalone document. It partners with the
-- old version of the manuscript
-- new version of the manuscript
-- tracked changes document
+### Summary
+More than a template letter, this repository holds a workflow to write reviewer responses letters and tracked changes documents, in which any quoted text from the manuscript maintains the correct section numbers, equation numbers, reference numbers, etc.
 
-Consider if a reviewer asks you to change a paragraph.
-- It is a good idea to quote changes that you have made in the response letter.
-- But if the paragraph references the label of a section, table, equation, then it will fail to compile.
-- This template uses cross-document referencing to automatically match the numbering to that of the main file.
-- And that's not all...
+### Details
+The reviewer response letter is not a standalone document.
+It partners with the original manuscript, the revised manuscript, and the tracked changes document.
 
-Benefits
+Consider if a reviewer asks you to change a paragraph, and you want to quote the changes in the response letter.
+- The quoted text includes a `\ref{}` to the label of a section, table, or equation
+    - Issue: It fails to compile because the letter does not contain the corresponding `\label{}`
+    - Solution: Use the package `\usepackage{xr}`
+- The quoted text includes numeric citations
+    - Issue: The citation numbers don't correspond between the manuscripts, letter, and tracked changes document
+    - Solution: It's complicated...
+
+This template and workflow solves both of these problems and provides other some additional conveniences.
+
+Specifically:
+- A letter class and template to match the workflow
+- Automatic generation of tracked changes markup with latexdiff
+- Automatic matching of section/table/equation numbers to the revised manuscript
 - Consistent numbering of citations between documents
-    - old file: old numbers
-    - new file: new numbers
-    - tracked changes file: new numbers, except deleted citations are in the old numbers
-    - response letter:      new numbers, except deleted citations are in the old numbers
-- Automatically match section/table/equation numbering to that of the main file.
-- Automatically generate tracked changes markup with latexdiff.
 
-Limitations
-- Must follow the strictly defined workflow.
+| Document                 | Citation numbers match                                               |
+|--------------------------|----------------------------------------------------------------------|
+| Original manuscript      | Original manuscript                                                  |
+| Revised manuscript       | Revised manuscript                                                   |
+| Tracked changes document | Revised manuscript (deleted citations match the original manuscript) |
+| Response letter          | Revised manuscript (deleted citations match the original manuscript) |
 
 
 ## Instructions
+### General Use
+> [!WARNING]
+> Read carefully. Deviating from this workflow may result in frustration.
+
 Prerequisites
 - Install latex and latexdiff on your computer.
-- Non-windows users will need to install the cross-platform [PowerShell Core](https://github.com/PowerShell/PowerShell).
+- Non-windows users should install the cross-platform [PowerShell Core](https://github.com/PowerShell/PowerShell).
 
-Setup
-1. Start from the version of your article that was submitted for review
-2. Name the main latex file `main.tex`
-3. Copy the folder `RevisionScripts\` into the same folder as `main.tex`
+Project Setup
+1. Starting from the version of your manuscript that was submitted for review
+2. Name the manuscript's main latex file `main.tex`
+3. Copy the following into the same folder as `main.tex`
+    - `RevisionScripts`    (do not rename this folder)
+    - `AuthorResponse.cls` (do not rename this file)
+    - `response1.tex`
 4. Compile `main.tex`
-5. Run `RevisionScripts\GenerateFlattened.ps1`
-    - This will save the old version of the article in a new folder named `Revisions\`
+5. Run `RevisionScripts/GenerateFlattened.ps1`
+    - This will save a copy of the manuscript to `Revisions/main_flat.bibkeys` and `Revisions/main_flat.tex`
+
+Edit your manuscript
+1. Edit your manuscript as required to address all reviewer comments
 
 Generate tracked changes file
-1. Edit your article as required to address all reviewer comments
-2. Compile `main.tex`
-3. Run `RevisionScripts\GenerateDiff.ps1`
-4. Compile `main_diff.tex`
+1. Compile `main.tex`
+2. Run `RevisionScripts/GenerateDiff.ps1`
+3. Compile `main_diff.tex`
 
-Create response letter
+Write your response letter
 1. Write your response letter in `response1.tex`
     - Quotes of the text with tracked-changes markup can be copied from the generated `main_diff.tex` into the response
 2. Compile `response1.tex`
@@ -59,12 +75,22 @@ Output
 - `main_diff.pdf` is the tracked changes document.
 - `response1.pdf` is the review response letter.
 
-Notes
-* If you make more changes, you can regenerate the tracked changes file. Be sure to recompile `main.tex` first.
-* For 2nd round of revision, rerun `RevisionScripts\GenerateFlattened.ps1` to reset file that you compare against.
 
-Troubleshooting
-* latexdiff is not perfect. It defaults to skipping markup in environments and commands that it does not know. You can register more commands in `RevisionScripts\GenerateDiff.ps1`, using the `$DiffOptions` variable. This will require some trial and error.
+### Continued Use
+If you edits to the manuscript, you can regenerate the tracked changes file by following the steps "Generate tracked changes file".
+Additionally, recompile the response letter to update the citation/section/table/equation numbers.
+Be sure to recompile `main.tex` before running the script.
+
+For 2nd round of revision, rerun `RevisionScripts/GenerateFlattened.ps1` to reset version of the manuscript that you compare against.
+
+
+### Troubleshooting
+Many steps assume that `main.tex` is compiled, as they use the auxiliary files that are generated by the compilation.
+If in doubt, recompile it before running any script or before compiling the letter.
+
+latexdiff is not perfect. It defaults to skipping markup in environments and commands that it does not know.
+You can register more commands in `RevisionScripts/GenerateDiff.ps1` using the `$DiffOptions` variable.
+This will require some trial and error.
 
 
 ## License
