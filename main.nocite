@@ -3,5 +3,6 @@
 % The order of the keys therefore matches the citation numbers
 \nocite{example2}
 \nocite{example1}
-\nocite{example3}
+\nocite{example4}
 \nocite{example5}
+\nocite{example3}
