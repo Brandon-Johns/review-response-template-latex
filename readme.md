@@ -1,4 +1,4 @@
-# Reviewer Response Latex Template
+# Review Response Latex Template
 For authors of scientific articles to respond to reviewer comments.
 
 Example output
@@ -8,19 +8,22 @@ Example output
 
 ## About
 ### Summary
-More than a template letter, this repository holds a workflow to write reviewer responses letters and tracked changes documents, in which any quoted text from the manuscript maintains the correct section numbers, equation numbers, reference numbers, etc.
+More than a letter template, this repository holds a workflow to write reviewer response letters and tracked changes documents, in which any quoted text from the manuscript maintains the correct section numbers, equation numbers, reference numbers, etc.
+
+This repository does not contain any AI generated content.
+
 
 ### Details
 The reviewer response letter is not a standalone document.
 It partners with the original manuscript, the revised manuscript, and the tracked changes document.
 
 Consider if a reviewer asks you to change a paragraph, and you want to quote the changes in the response letter.
-- The quoted text includes a `\ref{}` to the label of a section, table, or equation
-    - Issue: It fails to compile because the letter does not contain the corresponding `\label{}`
+- If the quoted text includes a `\ref{}` to the label of a section, table, or equation
+    - Issue: The letter will fail to compile because it does not contain the corresponding `\label{}`
     - Solution: Use the package `\usepackage{xr}`
-- The quoted text includes numeric citations
-    - Issue: The citation numbers don't correspond between the manuscripts, letter, and tracked changes document
-    - Solution: It's complicated...
+- If the quoted text includes numeric citations
+    - Issue: The citation numbers don't correspond between the manuscripts, letter, and tracked changes
+    - Solution: Use `\nocite{}` in the letter. Hardcode the numbers of deleted citations in the tracked changes
 
 This template and workflow solves both of these problems and provides other some additional conveniences.
 
@@ -49,7 +52,7 @@ Prerequisites
 
 Project Setup
 1. Starting from the version of your manuscript that was submitted for review
-2. Name the manuscript's main latex file `main.tex`
+2. Rename the manuscript's main latex file to `main.tex`
 3. Copy the following into the same folder as `main.tex`
     - `RevisionScripts`    (do not rename this folder)
     - `AuthorResponse.cls` (do not rename this file)
@@ -61,7 +64,7 @@ Project Setup
 Edit your manuscript
 1. Edit your manuscript as required to address all reviewer comments
 
-Generate tracked changes file
+Generate the tracked changes document
 1. Compile `main.tex`
 2. Run `RevisionScripts/GenerateDiff.ps1`
 3. Compile `main_diff.tex`
@@ -71,17 +74,16 @@ Write your response letter
     - Quotes of the text with tracked-changes markup can be copied from the generated `main_diff.tex` into the response
 2. Compile `response1.tex`
 
-Output
+Result
 - `main_diff.pdf` is the tracked changes document.
 - `response1.pdf` is the review response letter.
 
 
 ### Continued Use
-If you edits to the manuscript, you can regenerate the tracked changes file by following the steps "Generate tracked changes file".
+If you continue making edits to the manuscript, you can regenerate the tracked changes document by following the steps "Generate the tracked changes document" (Be sure to recompile `main.tex`).
 Additionally, recompile the response letter to update the citation/section/table/equation numbers.
-Be sure to recompile `main.tex` before running the script.
 
-For 2nd round of revision, rerun `RevisionScripts/GenerateFlattened.ps1` to reset version of the manuscript that you compare against.
+For 2nd round revisions, rerun `RevisionScripts/GenerateFlattened.ps1` to update the version of the manuscript that the changes are to be compared against.
 
 
 ### Troubleshooting
